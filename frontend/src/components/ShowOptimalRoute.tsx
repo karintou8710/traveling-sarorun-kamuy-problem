@@ -4,6 +4,7 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import styled from "styled-components";
 
 import CityPanel from "./CityPanel";
+import {FormGroup} from "@blueprintjs/core";
 
 // このコンポーネントがやること：
 // 1. 選択された都市の表示
@@ -20,12 +21,17 @@ function ShowOptimalRoute(props: Props) {
 
   const {route, time} = props;
 
-    const city_name = "小樽";
-    return (
+  const convertToTime = (n: number): string => {
+    const hh: number = Math.floor(n / 60);
+    const mm: number = n % 60;
+    return String(hh) + ":" + String(mm);
+  }
+
+  return (
     <div>
       {route.map((city, index) =>
         <>
-            <CityPanel city_name={city_name} arrival_time={"10:10"} />
+          <CityPanel city_name={route[index]} arrival_time={convertToTime(time[index])} />
         </>
       )}
     </div>

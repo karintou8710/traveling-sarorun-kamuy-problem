@@ -13,7 +13,7 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 function TravelingSarorunKamuy() {
 
   // TODO, 別の定数ファイルに定義した方が良い？
-  const cities: string[] = ['Sapporo（札幌）', 'Hakodate（函館）', 'Asahikawa（旭川）', 'Tomakomai（苫小牧）'];
+  const cities: string[] = ['札幌', '函館', '旭川', '苫小牧', '小樽'];
 
   const [selectedCityIDs, setSelectedCityIDs] = useState<boolean[]>([]);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
@@ -51,7 +51,7 @@ function TravelingSarorunKamuy() {
       <Button icon="search" intent="success" text="Go" onClick={() => {
         handleSubmit();
       }}/>
-      {isSubmit ? <ShowOptimalRoute route={cities} time={[0, 4, 34, 46, 56]} /> : null}
+      {isSubmit ? <ShowOptimalRoute route={cities} time={[0, 40, 333, 523, 3336]} /> : null}
     </div>
   );
 }
