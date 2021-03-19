@@ -60,9 +60,11 @@ class BitDP:
         s = (1<<n) - 1
         v = self.end
 
+        if self.start!=self.end:
+            s ^= (1<<self.start)
+
         if v == "":
-            v = min(enumerate(self.dp[-1]), key = lambda x : x[1])[0]
-            print(v, self.dp[-1])
+            v = min(enumerate(self.dp[s]), key = lambda x : x[1])[0]
 
         self.route.append(v)
 
@@ -131,4 +133,3 @@ print(bitdp.getValue())
 print(bitdp.getRoute())
 print(bitdp.getTimes())
 """
-
