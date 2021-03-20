@@ -1,5 +1,7 @@
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
+import json
+import sys
 
 from .models import City, Time
 from .module import BitDP
@@ -13,9 +15,12 @@ def sample_index(request):
 
 def get_api_cities(request):
     # 街データの取得
+    l = []
+    for cityObject in City.objects.all():
+        l.append(cityObject.name)
     data = {
         'status': 'ok',
-        'cities': ['札幌', '函館', '稚内', '旭川', '知床'],
+        'cities': l,
     }
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
 
@@ -49,8 +54,8 @@ def post_api_calc(request):
         endWord = request.POST["end"]
     except KeyError as e:
         context = {
-            "status" : "error",
-            "msg" : "KeyError",
+            "status": "error",
+            "msg": "KeyError",
         }
         return JsonResponse(context, safe=False, json_dumps_params={'ensure_ascii': False})
     
@@ -67,7 +72,7 @@ def post_api_calc(request):
         city2id[city_name] = key
 
     n = len(VisitCities)
-    INF = 1<<63
+    INF = 1 << 63
     graph = [[INF]*n for _ in range(n)]
 
     timeObjects = Time.objects.filter(city_name1__in=VisitCities, city_name2__in=VisitCities)
