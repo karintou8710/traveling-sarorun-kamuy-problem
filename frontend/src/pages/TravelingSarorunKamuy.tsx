@@ -53,7 +53,7 @@ function TravelingSarorunKamuy() {
       }
     }
     // const url = HOST + '/api/calc';
-    const url = 'api/calc';
+    const url = HOST + '/api/calc';
     const method = 'POST';
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
