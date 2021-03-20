@@ -1,5 +1,6 @@
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 import json
 import sys
 
@@ -7,10 +8,7 @@ from .models import City, Time
 from .module import BitDP
 
 def sample_index(request):
-    data = {
-        
-    }
-    return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
+    return render(request, "tspAPI/index.html")
 
 
 def get_api_cities(request):
@@ -42,7 +40,7 @@ def get_api_time(request):
     
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
 
-
+@csrf_exempt
 def post_api_calc(request):
 
     if (request.method == "GET"):
