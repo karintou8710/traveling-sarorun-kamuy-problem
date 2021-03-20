@@ -20,6 +20,9 @@ interface Props {
 function ShowOptimalRoute(props: Props) {
 
   const {route, time} = props;
+  const arrival_times: string[] = ["1","2","3","4","5"];
+  const city_names: string[] = ["札幌","小樽","知床","室蘭","旭川"];
+
 
   const convertToTime = (n: number): string => {
     const hh: number = Math.floor(n / 60);
