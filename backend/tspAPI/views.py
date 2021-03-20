@@ -1,8 +1,20 @@
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import render
+import json
+import sys
 
 from .models import City, Time
 from .module import BitDP
+
+
+def load_json(filename: str) -> dict:
+    with open(filename, mode='r', encoding='utf-8') as file:
+        decoded_dictionary = json.load(file)
+    return decoded_dictionary
+
+
+
+
 
 def sample_index(request):
     data = {
@@ -13,24 +25,20 @@ def sample_index(request):
 
 def get_api_cities(request):
     # 街データの取得
+    l = []
+    for cityObject in City.objects.all():
+        l.append(cityObject.name)
     data = {
         'status': 'ok',
-        'cities': ['札幌', '函館', '稚内', '旭川', '知床'],
+        'cities': l,
     }
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 
 def get_api_time(request):
     # 時間データの取得
-    data = {
-        'status': 'ok',
-        '札幌': {'札幌': 0, '函館': 300, '稚内': 480, '旭川': 120, '知床': 480},
-        '函館': {'札幌': 300, '函館': 0, '稚内': 780, '旭川': 420, '知床': 780},
-        '稚内': {'札幌': 480, '函館': 780, '稚内': 0, '旭川': 360, '知床': 480},
-        '旭川': {'札幌': 120, '函館': 420, '稚内': 360, '旭川': 0, '知床': 420},
-        '知床': {'札幌': 480, '函館': 780, '稚内': 480, '旭川': 420, '知床': 0},
-    }
-    return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
+    all = Time.objects.all()  # 全件取得
+    return JsonResponse(data=all, safe=False, json_dumps_params={'ensure_ascii': False})
 
 
 def post_api_calc(request):
@@ -54,8 +62,8 @@ def calc(request):
         endWord = request.POST["end"]
     except KeyError as e:
         context = {
-            "status" : "error",
-            "msg" : "KeyError",
+            "status": "error",
+            "msg": "KeyError",
         }
         return JsonResponse(context, safe=False, json_dumps_params={'ensure_ascii': False})
     
@@ -64,7 +72,7 @@ def calc(request):
         city2id[city_name] = key
 
     n = len(VisitCities)
-    INF = 1<<63
+    INF = 1 << 63
     graph = [[INF]*n for _ in range(n)]
 
     timeObjects = Time.objects.filter(city_name1__in=VisitCities, city_name2__in=VisitCities)
@@ -84,8 +92,8 @@ def calc(request):
     time = bitdp.getTimes()
 
     context = {
-        "status" : "ok"
-        "route" : route,
-        "time" : time,
+        "status": "ok",
+        "route": route,
+        "time": time,
     }
     return JsonResponse(context, safe=False, json_dumps_params={'ensure_ascii': False})
