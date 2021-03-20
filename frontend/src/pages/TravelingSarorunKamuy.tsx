@@ -17,6 +17,7 @@ function TravelingSarorunKamuy() {
 
   const [selectedCityIDs, setSelectedCityIDs] = useState<boolean[]>([]);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
+  const [hoge, setHoge] = useState<number>(0);
 
 
   // チェックボックスが押されたタイミングで、状態を更新する
@@ -33,6 +34,8 @@ function TravelingSarorunKamuy() {
   }
 
   const handleSubmit = (): void => {
+    // TODO: ここで API call して、情報詰めて、ShowOptimalRoute くんに props として渡す
+    setHoge(hoge + 1);
     setIsSubmit(true);
   }
 
@@ -50,7 +53,7 @@ function TravelingSarorunKamuy() {
       <Button icon="search" intent="success" text="Go" onClick={() => {
         handleSubmit();
       }}/>
-      {isSubmit ? <ShowOptimalRoute cities={cities} selectedCityIDs={selectedCityIDs}/> : null}
+      {isSubmit ? <ShowOptimalRoute route={cities} time={hoge} /> : null}
     </div>
   );
 }
