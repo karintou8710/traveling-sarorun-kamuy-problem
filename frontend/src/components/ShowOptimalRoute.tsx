@@ -19,13 +19,13 @@ interface Props {
 function ShowOptimalRoute(props: Props) {
 
   const {route, time} = props;
-
-    const city_name = "小樽";
+    const arrival_times: string[] = ["1","2","3","4","5"];
+    const city_names: string[] = ["札幌","小樽","知床","室蘭","旭川"];
     return (
     <div>
       {route.map((city, index) =>
         <>
-            <CityPanel city_name={city_name} arrival_time={"10:10"} />
+            <CityPanel city_name={city_names[index]} arrival_time={arrival_times[index]} />
         </>
       )}
     </div>
