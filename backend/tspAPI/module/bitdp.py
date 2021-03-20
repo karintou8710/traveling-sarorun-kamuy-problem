@@ -77,8 +77,13 @@ class BitDP:
             self.times.append(self.graph[prevVertex][v])
             v = prevVertex
         
+        self.times.append(0)
+        
         self.route.reverse()
         self.times.reverse()
+
+        for i in range(len(self.times)-1):
+            self.times[i+1] += self.times[i]
 
     def getValue(self):
         """
