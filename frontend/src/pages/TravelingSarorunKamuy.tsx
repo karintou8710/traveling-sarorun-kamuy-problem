@@ -22,7 +22,7 @@ function TravelingSarorunKamuy() {
 
   useEffect(() => {
     getCities();
-    alert("初期化されました。");
+    // alert("初期化されました。");
   }, []);
 
   // チェックボックスが押されたタイミングで、状態を更新する
