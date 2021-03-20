@@ -6,7 +6,7 @@ from .module import BitDP
 
 def sample_index(request):
     data = {
-
+        
     }
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
 
@@ -34,16 +34,6 @@ def get_api_time(request):
 
 
 def post_api_calc(request):
-    # 最短距離の計算
-    data = {
-        'cities': ['札幌', '函館', '稚内', '旭川', '知床'],
-        'start': '札幌',
-        'end': '知床',
-    }
-    return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
-
-
-def calc(request):
 
     if (request.method == "GET"):
         raise Http404("404 page not found")
@@ -58,6 +48,14 @@ def calc(request):
             "msg" : "KeyError",
         }
         return JsonResponse(context, safe=False, json_dumps_params={'ensure_ascii': False})
+    
+    if (len(VisitCities)>20):
+        context = {
+            "status" : "error",
+            "msg" : "選択できる都市の数は20以下です",
+        }
+        return JsonResponse(context, safe=False, json_dumps_params={'ensure_ascii': False})
+        
     
     city2id = dict()
     for key, city_name in enumerate(VisitCities):
