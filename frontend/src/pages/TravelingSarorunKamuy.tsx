@@ -1,6 +1,7 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import {Button, Checkbox} from "@blueprintjs/core";
 import ShowOptimalRoute from "../components/ShowOptimalRoute";
+import { CITIES } from '../config/constant';
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 
@@ -13,12 +14,16 @@ import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 function TravelingSarorunKamuy() {
 
   // TODO, 別の定数ファイルに定義した方が良い？
-  const cities: string[] = ['Sapporo（札幌）', 'Hakodate（函館）', 'Asahikawa（旭川）', 'Tomakomai（苫小牧）'];
-
+  // const cities: string[] = ['札幌', '函館', '旭川', '苫小牧', '小樽'];
+  // const cities = CITIES
+  const [cities, setCities] = useState<string[]>([]);
   const [selectedCityIDs, setSelectedCityIDs] = useState<boolean[]>([]);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
-  const [hoge, setHoge] = useState<number>(0);
 
+  useEffect(() => {
+    getCities();
+    alert("初期化されました。");
+  }, []);
 
   // チェックボックスが押されたタイミングで、状態を更新する
   const handleCheckboxChange = (index: number): void => {
@@ -35,9 +40,43 @@ function TravelingSarorunKamuy() {
 
   const handleSubmit = (): void => {
     // TODO: ここで API call して、情報詰めて、ShowOptimalRoute くんに props として渡す
-    setHoge(hoge + 1);
+
     setIsSubmit(true);
   }
+
+  const getCities = (): void => {
+    const url = '/api/cities';
+    const method = 'GET';
+    const headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    fetch(url, {method, headers}).then((response) => {
+      if (response.ok) {
+        // 親コンポーネントに発火させる
+        // To do
+      }
+      setCities(CITIES);
+    });
+  } 
+
+  const getCalc = (): void => {
+    const url = 'api/calc';
+    const method = 'POST';
+    const headers = {
+      'Content-Type': 'application/json; charset=UTF-8',
+    };
+    const body = JSON.stringify({
+      // body: text,
+      // qid: questionId,
+    });
+    fetch(url, {method, headers, body}).then((response) => {
+      if (response.ok) {
+        // 親コンポーネントに発火させる
+        // To do
+      }
+    });
+  }
+
 
   return (
     <div>
@@ -53,7 +92,7 @@ function TravelingSarorunKamuy() {
       <Button icon="search" intent="success" text="Go" onClick={() => {
         handleSubmit();
       }}/>
-      {isSubmit ? <ShowOptimalRoute route={cities} time={hoge} /> : null}
+      {isSubmit ? <ShowOptimalRoute route={cities} time={[0, 40, 333, 523, 3336]} /> : null}
     </div>
   );
 }
