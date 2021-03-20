@@ -60,7 +60,7 @@ function TravelingSarorunKamuy() {
   } 
 
   const getCalc = (): void => {
-    const url = 'api/answers';
+    const url = 'api/calc';
     const method = 'POST';
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
