@@ -19,7 +19,8 @@ function CityPanel(props: Props) {
         <A>{city_name}</A>
         <A>{arrival_time}</A>
         
-          <CityIcon city_name={city_name} />
+        <B><CityIcon city_name={city_name} /></B>
+          
     </MainContainer>
 
   );
@@ -37,14 +38,21 @@ const MainContainer = styled.div`
   list-style: none;
   margin: 0px;
   width: 100%;
-  
+
   
 `
 
 const A  = styled.div`
+text-align: center;
+font-size:40px;
+margin: 50px;
 
-margin: 60px;
-font-size:80px;
+`
+
+const B  = styled.div`
+position: absolute;
+right: 500px;
+margin: 50px;
 
 `
 
