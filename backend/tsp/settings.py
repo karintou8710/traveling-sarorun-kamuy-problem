@@ -20,7 +20,6 @@ env.read_env('.env')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
@@ -30,7 +29,8 @@ SECRET_KEY = env.get_value('SECRET_KEY', str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.get_value('DEBUG', bool)
 
-ALLOWED_HOSTS = env.get_value('ALLOWED_HOSTS', list)
+# ALLOWED_HOSTS = env.get_value('ALLOWED_HOSTS', list)
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -43,9 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -53,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'tsp.urls'
@@ -124,3 +127,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     "https://example.com",
+#     "https://sub.example.com",
+#     "http://localhost:8080",
+#     "http://localhost:3080",
+#     "http://127.0.0.1:9000"
+# ]
