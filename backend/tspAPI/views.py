@@ -84,7 +84,7 @@ def calc(request):
     time = bitdp.getTimes()
 
     context = {
-        "status" : "ok"
+        "status" : "ok",
         "route" : route,
         "time" : time,
     }
