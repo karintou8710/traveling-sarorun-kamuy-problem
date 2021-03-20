@@ -53,7 +53,7 @@ function TravelingSarorunKamuy() {
       }
     }
     // const url = HOST + '/api/calc';
-    const url = HOST + '/api/calc';
+    const url = HOST + '/api/calc/';
     const method = 'POST';
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
@@ -75,7 +75,7 @@ function TravelingSarorunKamuy() {
   }
 
   const getCities = (): void => {
-    const url = HOST + '/api/cities';
+    const url = HOST + '/api/cities/';
     const method = 'GET';
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
