@@ -46,10 +46,13 @@ def post_api_calc(request):
     if (request.method == "GET"):
         raise Http404("404 page not found")
     
+    print(request.POST)
+    datas = json.loads(request.body)
+    print(datas)
     try:
-        VisitCities =  request.POST["cities"]
-        startWord = request.POST["start"]
-        endWord = request.POST["end"]
+        VisitCities =  datas["cities"]
+        startWord = datas["start"]
+        endWord = datas["end"]
     except KeyError as e:
         context = {
             "status": "error",
