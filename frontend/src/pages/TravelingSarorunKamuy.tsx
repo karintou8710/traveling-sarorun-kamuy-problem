@@ -40,7 +40,7 @@ function TravelingSarorunKamuy() {
 
   const handleSubmit = (): void => {
     // TODO: ここで API call して、情報詰めて、ShowOptimalRoute くんに props として渡す
-
+    getCalc();
     setIsSubmit(true);
   }
 
@@ -60,14 +60,22 @@ function TravelingSarorunKamuy() {
   } 
 
   const getCalc = (): void => {
+
+    let selected_cities: string[] = [];
+    for (let i = 0; i < cities.length; i++) {
+      if (selectedCityIDs[i]) {
+        selected_cities.push(cities[i]);
+      }
+    }
     const url = 'api/calc';
     const method = 'POST';
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
     const body = JSON.stringify({
-      // body: text,
-      // qid: questionId,
+      start: "札幌",
+      end: "",
+      cities: selected_cities,
     });
     fetch(url, {method, headers, body}).then((response) => {
       if (response.ok) {
