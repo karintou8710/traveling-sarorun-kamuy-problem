@@ -18,8 +18,6 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('tspAPI/', include('tspAPI.urls')),
-    path('cities/', include('tspAPI.urls')),
-    path('time/', include('tspAPI.urls')),
-    path('calc', include('tspAPI.urls')),
+    # include で tspAPI.urlsに流す
+    path('', include('tspAPI.urls')),
 ]
