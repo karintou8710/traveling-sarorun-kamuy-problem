@@ -24,12 +24,17 @@ def get_api_time(request):
     # 時間データの取得
     data = {
         'status': 'ok',
-        '札幌': {'札幌': 0, '函館': 300, '稚内': 480, '旭川': 120, '知床': 480},
-        '函館': {'札幌': 300, '函館': 0, '稚内': 780, '旭川': 420, '知床': 780},
-        '稚内': {'札幌': 480, '函館': 780, '稚内': 0, '旭川': 360, '知床': 480},
-        '旭川': {'札幌': 120, '函館': 420, '稚内': 360, '旭川': 0, '知床': 420},
-        '知床': {'札幌': 480, '函館': 780, '稚内': 480, '旭川': 420, '知床': 0},
+        'time': {},
     }
+    for timeObject in Time.objects.all():
+        name1 = timeObject.city_name1
+        name2 = timeObject.city_name2
+        time = timeObject.time
+        if not data["time"].get(name1):
+            data["time"][name1] = []
+        
+        data["time"][name1].append([name2, time])
+    
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
 
 
