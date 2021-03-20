@@ -195,3 +195,4 @@ const ModalContainer = styled.div`
  `
 const ShowOptimalRouteContainer = styled.div`
   margin-bottom: 60px;
+ `
