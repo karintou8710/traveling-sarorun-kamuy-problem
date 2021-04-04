@@ -18,6 +18,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # include で tspAPI.urlsに流す
+    # '/'のpathを持つincludeで api.urlsに流す
+    # ブラウザでの"/"=pathの''
     path('', include('tspAPI.urls')),
 ]

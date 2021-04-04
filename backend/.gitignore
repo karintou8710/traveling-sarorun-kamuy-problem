@@ -2,3 +2,5 @@
 migrations
 __pycache__
 db.sqlite3
+
+_test.py

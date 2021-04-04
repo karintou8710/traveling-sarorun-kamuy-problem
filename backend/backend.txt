@@ -1,6 +1,7 @@
 --インストールしたモジュールリスト--
 django
 django-environ
+django-cors-headers
 
 -------------------------------------
 .envファイルはmanage.pyと同じ階層に置く
