@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {Button, Checkbox, Dialog, Radio, RadioGroup} from "@blueprintjs/core";
 import ShowOptimalRoute from "../components/ShowOptimalRoute";
-import { CITIES } from '../config/constant';
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import styled from "styled-components";
@@ -19,13 +18,14 @@ function TravelingSarorunKamuy() {
 
   // TODO, 別の定数ファイルに定義した方が良い？
   // const cities: string[] = ['札幌', '函館', '旭川', '苫小牧', '小樽'];
-  // const cities = CITIES
   const [cities, setCities] = useState<string[]>([]);
   const [start, setStart] = useState<string>("");
   const [end, setEnd] = useState<string>("");
   const [selectedCityIDs, setSelectedCityIDs] = useState<boolean[]>([]);
   const [isSubmit, setIsSubmit] = useState<boolean>(false);
   const [dialogMode, setDialogMode] = useState<number>(0); // 0: 閉じてる 1: 1 ページ目
+  const [route, setRoute] = useState<string[]>([]);
+  const [time, setTime] = useState<number[]>([]);
 
   useEffect(() => {
     getCities();
@@ -52,26 +52,34 @@ function TravelingSarorunKamuy() {
         selected_cities.push(cities[i]);
       }
     }
-    // const url = HOST + '/api/calc';
+
     const url = HOST + '/api/calc/';
     const method = 'POST';
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
+    const mode = 'cors';
     const body = JSON.stringify({
       cities: selected_cities,
       start: start,
       end: end,
     });
-    fetch(url, {method, body, headers}).then((response) => {
+    fetch(url, {method, body, headers, mode})
+    .then((response) => {
       if (response.ok) {
         console.log("called api");
-        console.log(response);
+        return response.json();
       } else {
         alert('failed to call api success')
       }
+    })
+    .then(obj => {
+      setIsSubmit(true);
+      setRoute(obj.route);
+      setTime(obj.time);
+      console.log(obj);
     });
-    setIsSubmit(true);
+
   }
 
   const getCities = (): void => {
@@ -80,18 +88,20 @@ function TravelingSarorunKamuy() {
     const headers = {
       'Content-Type': 'application/json; charset=UTF-8',
     };
-    fetch(url, {method, headers}).then((response) => {
+    const mode = 'cors';
+    fetch(url, {method, headers, mode})
+    .then((response) => {
       if (response.ok) {
-        // To do
-        console.log("called api");
-        console.log(response);
-        alert("api cities success");
+        console.log("get citiess called api");
+        return response.json();
       } else {
         alert('failed to call api cities')
       }
+    })
+    .then(obj => {
+      setCities(obj.cities);
+      console.log(obj);
     });
-    // TODO 消す
-    setCities(CITIES);
   }
 
   const handleClose = () => {
@@ -179,7 +189,7 @@ function TravelingSarorunKamuy() {
         </ModalContainer>
       </Dialog>
       <ShowOptimalRouteContainer>
-        {isSubmit ? <ShowOptimalRoute route={cities} time={[0, 40, 333, 523, 3336]} /> : null}
+        {isSubmit ? <ShowOptimalRoute route={route} time={time} /> : null}
       </ShowOptimalRouteContainer>
     </MainContainer>
   );

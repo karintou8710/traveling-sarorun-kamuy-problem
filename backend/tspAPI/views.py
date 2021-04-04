@@ -40,15 +40,14 @@ def get_api_time(request):
     
     return JsonResponse(data=data, safe=False, json_dumps_params={'ensure_ascii': False})
 
+
 @csrf_exempt
 def post_api_calc(request):
 
     if (request.method == "GET"):
         raise Http404("404 page not found")
     
-    print(request.POST)
     datas = json.loads(request.body)
-    print(datas)
     try:
         VisitCities =  datas["cities"]
         startWord = datas["start"]
@@ -87,7 +86,8 @@ def post_api_calc(request):
 
     start = city2id[startWord]
     end = city2id.get(endWord, "")
-        
+
+    print(n, start, end, graph)
     bitdp = BitDP(n, start, end, graph)
     route = [VisitCities[i] for i in bitdp.getRoute()]
     time = bitdp.getTimes()
